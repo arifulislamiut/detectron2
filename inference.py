@@ -1,3 +1,31 @@
+# Select model
+# model = "mask_rcnn_R_101_C4_3x_20250129"
+# model = "mask_rcnn_R_101_FPN_3x_20250307"
+model = "mask_rcnn_R_101_FPN_3x_20250308_t"
+# model = "mask_rcnn_R_50_FPN_3x_20250306"
+# model = "mask_rcnn_R_50_C4_3x_20250306" # X
+
+# ✅ Select Camera Source
+use_camera = False
+
+# Select Checkpoint
+# checkpoint = "model_0004999.pth"
+# checkpoint = "model_0019999.pth"
+# checkpoint = "model_0039999.pth"
+# checkpoint = "model_0099999.pth"
+checkpoint = "model_final.pth"
+
+num_of_class = 2
+score_threshold = 0.7
+
+# Paths
+config_path = f"input/{model}/training_config.yaml"
+pth_path = f"input/{model}/{checkpoint}"
+pkl_path = f"input/{model}/train_metadata.pkl"
+video_path = "input/video/ad_short.mp4"
+output_path = "output/"
+
+
 import torch
 import cv2
 import os
@@ -8,15 +36,6 @@ from detectron2.engine import DefaultPredictor
 from detectron2.utils.visualizer import Visualizer
 from detectron2.data import MetadataCatalog
 
-model = "mask_rcnn_R_101_C4_3x_20250129"
-
-# Paths
-config_path = f"input/{model}/config.yaml"
-pth_path = f"input/{model}/model_final.pth"
-pkl_path = f"input/{model}/train_metadata.pkl"
-video_path = "input/video/ad_short.mp4"
-output_path = "output/"
-
 # ✅ Check CUDA & Torch
 print(f"CUDA Version: {torch.version.cuda}")
 print(f"CUDA Available: {torch.cuda.is_available()}")
@@ -26,8 +45,8 @@ print(f"GPU Count: {torch.cuda.device_count()}")
 cfg = get_cfg()
 cfg.merge_from_file(config_path)
 cfg.MODEL.WEIGHTS = pth_path
-cfg.MODEL.ROI_HEADS.SCORE_THRESH_TEST = 0.6
-cfg.MODEL.ROI_HEADS.NUM_CLASSES = 2
+cfg.MODEL.ROI_HEADS.SCORE_THRESH_TEST = score_threshold
+cfg.MODEL.ROI_HEADS.NUM_CLASSES = num_of_class
 cfg.MODEL.DEVICE = "cuda"  # Use GPU acceleration
 
 print("✅ Model Config Loaded")
@@ -40,8 +59,6 @@ with open(pkl_path, "rb") as f:
     metadata = pickle.load(f)
 print("✅ Metadata Loaded")
 
-# ✅ Select Camera Source
-use_camera = True  # Change to False if using USB camera or video file
 
 if use_camera:
     cap = cv2.VideoCapture(0, cv2.CAP_V4L2)
