@@ -1,7 +1,8 @@
 # Select model
 # model = "mask_rcnn_R_101_C4_3x_20250129"
 # model = "mask_rcnn_R_101_FPN_3x_20250307"
-model = "mask_rcnn_R_101_FPN_3x_20250308_t"
+model = "mask_rcnn_R_101_FPN_3x_20250309"
+# model = "faster_rcnn_R_101_FPN_3x_20250311"
 # model = "mask_rcnn_R_50_FPN_3x_20250306"
 # model = "mask_rcnn_R_50_C4_3x_20250306" # X
 
@@ -35,6 +36,7 @@ from detectron2.config import get_cfg
 from detectron2.engine import DefaultPredictor
 from detectron2.utils.visualizer import Visualizer
 from detectron2.data import MetadataCatalog
+from matplotlib import pyplot as plt
 
 # ✅ Check CUDA & Torch
 print(f"CUDA Version: {torch.version.cuda}")
@@ -88,6 +90,9 @@ while True:
 
     # ✅ Display the frame
     cv2.imshow("Jetson Detectron2", out_frame)
+
+    plt.imshow(out_frame)
+    plt.show()
 
     fps = 1.0 / (time.perf_counter() - fps_time)
     print("Net FPS: %f" % (fps))

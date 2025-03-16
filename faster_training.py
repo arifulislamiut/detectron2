@@ -14,17 +14,16 @@ link https://github.com/facebookresearch/detectron2/blob/main/MODEL_ZOO.md
 # model_name = "mask_rcnn_R_50_C4_3x"
 # model_name = "mask_rcnn_R_50_DC5_3x"
 # model_name = "mask_rcnn_R_50_FPN_3x"
-model_name = "mask_rcnn_R_101_FPN_3x"
+model_name = "faster_rcnn_R_101_FPN_3x"
 desired_number_of_epochs = 100
-num_of_class = 2
+num_of_class = 12
 is_resume = False
-dataset_base = "textile_segmentation-1"
+dataset_base = "fabvision-4"
 robo_api_key = "R8JQyQmyXKa0HMr7HzJT"
-robo_ws = "birdsobjectdetection-9vkje"
-robo_project = "textile_segmentation"
-dataset_version = 1
-dataset_format = "coco-segmentation"
-
+robo_ws = "project-lp5e2"
+robo_project = "fabvision-ub55i"
+dataset_version = 4
+dataset_format = "coco"
 
 # Set the output directory based on the model name
 import os
@@ -113,7 +112,7 @@ cfg.DATASETS.TRAIN = ("my_dataset_train",)
 cfg.DATASETS.TEST = ("my_dataset_test",)
 cfg.DATALOADER.NUM_WORKERS = 4
 cfg.MODEL.WEIGHTS = model_zoo.get_checkpoint_url(f"COCO-Detection/{model_name}.yaml")
-cfg.SOLVER.IMS_PER_BATCH = 8
+cfg.SOLVER.IMS_PER_BATCH = 4
 cfg.SOLVER.BASE_LR = 0.00025
 
 num_images = len(train_dataset_dicts)
@@ -121,7 +120,7 @@ iterations_per_epoch = num_images // cfg.SOLVER.IMS_PER_BATCH
 cfg.SOLVER.MAX_ITER = iterations_per_epoch * desired_number_of_epochs
 
 cfg.SOLVER.STEPS = []
-cfg.MODEL.ROI_HEADS.BATCH_SIZE_PER_IMAGE = 1024
+cfg.MODEL.ROI_HEADS.BATCH_SIZE_PER_IMAGE = 512
 cfg.MODEL.ROI_HEADS.NUM_CLASSES = num_of_class
 
 

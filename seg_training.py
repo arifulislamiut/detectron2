@@ -15,14 +15,14 @@ link https://github.com/facebookresearch/detectron2/blob/main/MODEL_ZOO.md
 # model_name = "mask_rcnn_R_50_DC5_3x"
 # model_name = "mask_rcnn_R_50_FPN_3x"
 model_name = "mask_rcnn_R_101_FPN_3x"
-desired_number_of_epochs = 150
-num_of_class = 2
-is_resume = True
-dataset_base = "textile_segmentation-1"
+desired_number_of_epochs = 200
+num_of_class = 1
+is_resume = False
+dataset_base = "Textile-defect-seg-uni-2"
 robo_api_key = "R8JQyQmyXKa0HMr7HzJT"
-robo_ws = "birdsobjectdetection-9vkje"
-robo_project = "textile_segmentation"
-dataset_version = 1
+robo_ws = "ds-gfhaj"
+robo_project = "textile-defect-seg-uni"
+dataset_version = 2
 dataset_format = "coco-segmentation"
 
 
